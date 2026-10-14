@@ -1,0 +1,23 @@
+<launch>
+    <!-- =====================================================================
+         BRINGUP ROBOT THẬT (không Gazebo).
+         Cách chạy:
+             ros2 launch mobile_bringup robot.launch.xml
+         Mặc định cổng serial là /dev/ttyUSB0 (đúng cổng ESP32 của bạn).
+         Ghi đè nếu cần (ví dụ board dùng chip USB-serial khác):
+             ros2 launch mobile_bringup robot.launch.xml serial_port:=/dev/ttyACM0
+         Chạy không có rviz2 (headless):
+             ros2 launch mobile_bringup robot.launch.xml launch_rviz:=false
+         ===================================================================== -->
+    <!-- [SỬA 2026-10-13] /dev/ttyACM0 -> /dev/ttyUSB1 (cổng THỰC TẾ của ESP32 trên
+         máy này, chip CP2102). Kiểm tra bằng: ls /dev/ttyUSB*  hoặc pio device list -->
+    <arg name="serial_port" default="/dev/ttyUSB1"/>
+    <arg name="launch_rviz" default="true"/>
+
+    <include file="$(find-pkg-share mobile_controller)/launch/controller.launch.xml">
+        <arg name="use_gazebo" value="false"/>
+        <arg name="use_sim_time" value="false"/>
+        <arg name="launch_rviz" value="$(var launch_rviz)"/>
+        <arg name="serial_port" value="$(var serial_port)"/>
+    </include>
+</launch>
