@@ -9,10 +9,8 @@
 
   <buildtool_depend>ament_cmake</buildtool_depend>
 
-  <exec_depend>ros2launch</exec_depend>
-  <exec_depend>my_mobilerobot</exec_depend>
-  <exec_depend>mobile_controller</exec_depend>
-  <exec_depend>my_robot_hardware</exec_depend>
+
+
 
   <export>
     <build_type>ament_cmake</build_type>

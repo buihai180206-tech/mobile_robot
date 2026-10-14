@@ -32,25 +32,25 @@ install(DIRECTORY
 # (thay vì phải gõ ... teleop_keyboard.py). Nếu muốn biết script nằm ở đâu:
 #     ros2 pkg prefix my_mobilerobot    => .../install/my_mobilerobot
 #     ls install/my_mobilerobot/lib/my_mobilerobot/
-install(PROGRAMS
-  my_mobilerobot/teleop_keyboard.py
-  DESTINATION lib/${PROJECT_NAME}
-  RENAME teleop_keyboard
-)
-install(PROGRAMS
-  my_mobilerobot/demo_square.py
-  DESTINATION lib/${PROJECT_NAME}
-  RENAME demo_square
-)
+# install(PROGRAMS
+#   my_mobilerobot/teleop_keyboard.py
+#   DESTINATION lib/${PROJECT_NAME}
+#   RENAME teleop_keyboard
+# )
+# install(PROGRAMS
+#   my_mobilerobot/demo_square.py
+#   DESTINATION lib/${PROJECT_NAME}
+#   RENAME demo_square
+# )
 
-# [THÊM 2026-10-13] Node test vòng kín trên ROBOT THẬT: kiểm tra 2 bánh cùng chiều khi
-# ra lệnh đi thẳng, chiều quay đúng convention URDF, và ước lượng MAX_WHEEL_RAD_S.
-# Dùng: ros2 run my_mobilerobot wheel_test   (CẢNH BÁO: xe chạy thật ~0.3 m!)
-install(PROGRAMS
-  my_mobilerobot/wheel_test.py
-  DESTINATION lib/${PROJECT_NAME}
-  RENAME wheel_test
-)
+# # [THÊM 2026-10-13] Node test vòng kín trên ROBOT THẬT: kiểm tra 2 bánh cùng chiều khi
+# # ra lệnh đi thẳng, chiều quay đúng convention URDF, và ước lượng MAX_WHEEL_RAD_S.
+# # Dùng: ros2 run my_mobilerobot wheel_test   (CẢNH BÁO: xe chạy thật ~0.3 m!)
+# install(PROGRAMS
+#   my_mobilerobot/wheel_test.py
+#   DESTINATION lib/${PROJECT_NAME}
+#   RENAME wheel_test
+# )
 
 
 ament_package()

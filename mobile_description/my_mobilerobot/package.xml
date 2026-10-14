@@ -17,24 +17,9 @@
   <exec_depend>ros_gz_sim</exec_depend>
   <exec_depend>ros_gz_bridge</exec_depend>
 
-  <!-- ===== [THÊM] Các phụ thuộc còn thiếu cho ros2_control + node Python ===== -->
-  <exec_depend>controller_manager</exec_depend>   <!-- controller_manager + lệnh spawner -->
-  <exec_depend>ros2_controllers</exec_depend>     <!-- cấp joint_state_broadcaster + diff_drive_controller -->
-  <exec_depend>gz_ros2_control</exec_depend>      <!-- plugin GazeboSimROS2ControlPlugin / GazeboSimSystem -->
-  <exec_depend>geometry_msgs</exec_depend>        <!-- Twist / TwistStamped -->
-  <exec_depend>nav_msgs</exec_depend>             <!-- Odometry -->
-  <exec_depend>sensor_msgs</exec_depend>          <!-- Image / CameraInfo / JointState -->
-  <exec_depend>tf2_msgs</exec_depend>             <!-- TFMessage -->
-  <exec_depend>rosgraph_msgs</exec_depend>        <!-- Clock -->
 
   <test_depend>ament_lint_auto</test_depend>
   <test_depend>ament_lint_common</test_depend>
-
-  <exec_depend>ros2launch</exec_depend>
-
-  <!-- ===== [THÊM] gazebo.launch.xml có include launch của package mobile_controller
-       (để spawn joint_state_broadcaster + diff_drive_controller) => phải khai báo phụ thuộc -->
-  <exec_depend>mobile_controller</exec_depend>
 
   <export>
     <build_type>ament_cmake</build_type>

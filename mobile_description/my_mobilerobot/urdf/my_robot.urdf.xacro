@@ -1,20 +1,6 @@
 <?xml version="1.0"?>
 <robot name="my_mobilerobot" xmlns:xacro="http://www.ros.org/wiki/xacro">
 
-    <!-- ===== LỰA CHỌN PHẦN CỨNG (khối này được THÊM 2026-10-13) =====
-         use_gazebo true  nghĩa là mô phỏng (plugin gz_ros2_control/GazeboSimSystem)
-         use_gazebo false nghĩa là robot thật (plugin my_robot_hardware/MyRobotHardware)
-         Các tham số còn lại chỉ dùng cho robot thật, có thể ghi đè từ dòng lệnh xacro.
-         Lưu ý không dùng dấu hai chấm + khoảng trắng trong comment vì URDF bị parse YAML. -->
-    <xacro:arg name="use_gazebo" default="false" />
-    <!-- [SỬA 2026-10-13] Cổng THỰC TẾ đã đo được của board này là /dev/ttyUSB1
-         (chip CP2102, VID:PID=10C4:EA60). Kiểm tra lại bằng: ls /dev/ttyUSB*
-         Ghi đè khi chạy: ros2 launch ... serial_port:=/dev/ttyUSB0 -->
-    <xacro:arg name="serial_port" default="/dev/ttyUSB1" />
-    <xacro:arg name="baud_rate" default="115200" />
-    <xacro:arg name="gear_ratio" default="34" />
-    <!-- [SỬA 2026-10-13] encoder_cpr đổi 11 -> 44 (11 PPR x4 do decode cầu phương 4x). -->
-    <xacro:arg name="encoder_cpr" default="44" />
 
     <xacro:property name="base_length" value="0.6" />
     <xacro:property name="base_width" value="0.4" />
@@ -24,20 +10,7 @@
     <xacro:property name="caster_radius" value="0.05" />
 
     <xacro:include filename="common_properties.xacro"/>
-
-    <!-- [THÊM 2026-10-13] Chọn block ros2_control tương ứng với chế độ đang chạy.
-         use_gazebo true  -> include gazebo_sim_control.xacro (mô phỏng Gazebo)
-         use_gazebo false -> include gazebo_ros2_control.xacro (robot thật qua serial ESP32)
-         Ghi chú - trước đây file này include thẳng gazebo_ros2_control.xacro nên khi chạy
-         Gazebo cũng bị gắn plugin serial (MyRobotHardware) và Gazebo không chạy được.
-         Nay tách đôi để CẢ HAI chế độ đều hoạt động (không xoá code cũ, chỉ tách file). -->
-    <xacro:if value="$(arg use_gazebo)">
-        <xacro:include filename="gazebo_ros2_control.xacro"/>
-    </xacro:if>
-    <xacro:unless value="$(arg use_gazebo)">
-        <xacro:include filename="gazebo_ros2_control.xacro"/>
-    </xacro:unless>
-
+    <xacro:include filename="mobile_base_gazebo.xacro"/>
     <xacro:include filename="camera.xacro"/>
     <xacro:include filename="lidar.xacro"/>
     

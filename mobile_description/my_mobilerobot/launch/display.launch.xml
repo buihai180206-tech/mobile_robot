@@ -1,10 +1,5 @@
 <launch>
-<!--
-  Loai bo cac bien moi truong do VS Code ban SNAP tiem vao (GTK_PATH tro toi
-  module cua snap -> keo libpthread glibc cu cua /snap/core20 -> rviz2/
-  joint_state_publisher_gui chet voi "undefined symbol: __libc_pthread_init").
-  Dat rong de dung GTK cua he thong; vo hai khi chay tu terminal thuong.
--->
+
 <set_env name="GTK_PATH" value=""/>
 <set_env name="GTK_EXE_PREFIX" value=""/>
 <set_env name="GTK_IM_MODULE_FILE" value=""/>
