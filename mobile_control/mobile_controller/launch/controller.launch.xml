@@ -1,8 +1,8 @@
 <launch>
-    <arg name="use_gazebo" default="false"/>
-    <arg name="use_sim_time" default="false"/>
+    <arg name="use_gazebo" default="true"/>
+    <arg name="use_sim_time" default="true"/>
     <arg name="launch_rviz" default="true"/>
-    <arg name="serial_port" default="/dev/ttyUSB0"/>
+    <!-- <arg name="serial_port" default="/dev/ttyUSB0"/> -->
 
     <set_env name="GTK_PATH" value=""/>
     <set_env name="GTK_EXE_PREFIX" value=""/>
@@ -15,16 +15,23 @@
 
     <node pkg="robot_state_publisher" exec="robot_state_publisher">
         <param name="robot_description"
-               value="$(command 'xacro $(var urdf_path) use_gazebo:=$(var use_gazebo) serial_port:=$(var serial_port)')"/>
+               value="$(command 'xacro $(var urdf_path) use_gazebo:=$(var use_gazebo) ')"/>
         <param name="use_sim_time" value="$(var use_sim_time)"/>
     </node>
 
+    <!-- [SỬA] KHÔNG chạy ros2_control_node khi dùng Gazebo:
+         plugin gz_ros2_control-system nạp trong Gazebo đã TỰ tạo controller_manager
+         (/controller_manager). Chạy thêm node này sẽ sinh 2 /controller_manager
+         tranh chấp nhau -> controller không lên -> robot không chạy trong Gazebo.
+         Chỉ bật lại node này cho ROBOT THẬT (không có Gazebo). -->
+    <!--
     <node pkg="controller_manager" exec="ros2_control_node">
         <param name="robot_description"
-               value="$(command 'xacro $(var urdf_path) use_gazebo:=$(var use_gazebo) serial_port:=$(var serial_port)')"/>
+               value="$(command 'xacro $(var urdf_path) use_gazebo:=$(var use_gazebo) ')"/>
         <param name="use_sim_time" value="$(var use_sim_time)"/>
         <param from="$(find-pkg-share mobile_controller)/config/controller.yaml"/>
     </node>
+    -->
 
     <node pkg="controller_manager" exec="spawner" args="joint_state_broadcaster"/>
 

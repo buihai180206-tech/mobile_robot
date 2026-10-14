@@ -2,25 +2,7 @@
 <robot xmlns:xacro="http://www.ros.org/wiki/xacro">
 
  <!-- ================================= [SỬA] ==========================================
-      ĐÃ COMMENT 2 plugin Gazebo dưới đây.
-
-      QUAN TRỌNG: file mobile_base_gazebo.xacro này KHÔNG được include ở đâu cả.
-      my_robot.urdf.xacro chỉ include: common_properties, gazebo_ros2_control,
-      camera, lidar. Kiểm chứng:
-          $ xacro .../urdf/my_robot.urdf.xacro | grep 'filename="gz'
-          => chỉ thấy duy nhất gz_ros2_control-system
-      Nên hiện tại nó là CODE CHẾT, không ảnh hưởng gì tới mô phỏng.
-
-      TUY NHIÊN nó là "mìn chưa nổ": nếu ai đó include file này vào URDF thì sẽ có
-      2 hệ thống CÙNG ĐIỀU KHIỂN 2 bánh:
-        - gz::sim::systems::DiffDrive      : điều khiển bánh TRỰC TIẾP trong Gazebo
-        - ros2_control + diff_drive_controller : điều khiển QUA hardware interface
-      => 2 nguồn cùng ghi vận tốc 2 bánh => robot giật / nhảy loạn.
-      Tương tự, gz-sim-joint-state-publisher-system sẽ phát /joint_states song song với
-      joint_state_broadcaster => 2 nguồn cùng ghi 1 topic => TF bánh xe giật.
-
-      GIÁ TRỊ HỮU ÍCH ĐỂ TRA CỨU (đã chuyển sang mobile_controller/config/controller.yaml):
-        wheel_separation = 0.45 m ,  wheel_radius = 0.1 m
+    
 
  <gazebo>
         <plugin filename="gz-sim-diff-drive-system"

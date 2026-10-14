@@ -1,10 +1,5 @@
 <launch>
-    <!-- [SỬA 2026-10-13] File được cập nhật để chọn đúng chế độ mô phỏng.
-         robot_state_publisher nay truyền use_gazebo true vào xacro (trước đây không
-         truyền nên xacro lấy mặc định và gắn nhầm plugin serial của robot thật).
-         Việc nạp ros2_control trong Gazebo do controller.launch.xml đảm nhiệm với
-         use_gazebo true + use_sim_time true. -->
-    <!-- [THÊM 2026-10-13] Cho phép tắt rviz khi chạy mô phỏng (mặc định vẫn mở). -->
+
     <arg name="launch_rviz" default="true"/>
     <!-- Loại bỏ biến môi trường do VS Code bản SNAP tiêm vào (tránh lỗi GTK khi chạy rviz2/Gazebo) -->
     <set_env name="GTK_PATH" value=""/>

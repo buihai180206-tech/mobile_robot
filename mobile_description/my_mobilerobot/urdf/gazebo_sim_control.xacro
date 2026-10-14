@@ -15,9 +15,9 @@
        ===================================================================== -->
 
   <gazebo reference="left_wheel">
-    <mu1>1000000000000000.0</mu1>
-    <mu2>1000000000000000.0</mu2>
-    <kp>1000000000000.0</kp>
+    <mu1>1.0</mu1>
+    <mu2>1.0</mu2>
+    <kp>1000000.0</kp>
     <kd>10.0</kd>
     <minDepth>0.001</minDepth>
     <maxVel>0.1</maxVel>
@@ -25,9 +25,9 @@
   </gazebo>
 
   <gazebo reference="right_wheel">
-    <mu1>1000000000000000.0</mu1>
-    <mu2>1000000000000000.0</mu2>
-    <kp>1000000000000.0</kp>
+    <mu1>1.0</mu1>
+    <mu2>1.0</mu2>
+    <kp>1000000.0</kp>
     <kd>10.0</kd>
     <minDepth>0.001</minDepth>
     <maxVel>0.1</maxVel>
@@ -51,8 +51,7 @@
 
   <ros2_control name="RobotSystem" type="system">
     <hardware>
-      <plugin>mock_components/GenericSystem</plugin>
-      <param name="calculate_dynamics">true</param>
+      <plugin>gz_ros2_control/GazeboSimSystem</plugin>
   </hardware>
     <joint name="right_wheel_joint">
       <command_interface name="velocity">
