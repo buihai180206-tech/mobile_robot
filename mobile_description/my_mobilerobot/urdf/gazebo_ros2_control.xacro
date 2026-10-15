@@ -1,18 +1,6 @@
 <?xml version="1.0"?>
 <robot xmlns:xacro="http://www.ros.org/wiki/xacro">
 
-  <!-- =====================================================================
-       ROS2_CONTROL cho robot THẬT (không dùng Gazebo).
-       Plugin my_robot_hardware/MyRobotHardware giao tiếp serial với ESP32.
-       Các tham số dùng xacro arg (khai báo ở my_robot.urdf.xacro) để có thể
-       ghi đè từ dòng lệnh hoặc launch mà không cần sửa file này.
-       [GHI CHÚ 2026-10-13] File này trước đây gộp chung cả phần Gazebo (3 thẻ
-       <gazebo reference=...> đặt ma sát bánh xe + plugin gz_ros2_control-system +
-       hardware gz_ros2_control/GazeboSimSystem). Nay phần của Gazebo đã được
-       CHUYỂN sang file mới gazebo_sim_control.xacro, KHÔNG BỊ XOÁ, chỉ dời đi cho
-       gọn. File này hiện chỉ giữ phần robot thật. Muốn chạy Gazebo thì dùng
-       my_robot.urdf.xacro với use_gazebo true.
-       ===================================================================== -->
   <ros2_control name="MobileBaseHardwareInterface" type="system">
     <!-- <hardware>
       <plugin>my_robot_hardware/MyRobotHardware</plugin>
@@ -22,17 +10,25 @@
       <param name="encoder_cpr">$(arg encoder_cpr)</param>
     </hardware> -->
     <hardware>
-      <plugin>mock_components/GenericSystem</plugin>
-      <param name="calculate_dynamics">true</param>
+      <!-- <plugin>mock_components/GenericSystem</plugin>
+      <param name="calculate_dynamics">true</param> -->
+      <plugin>gz_ros2_control/GazeboSimSystem</plugin>   
+      <!--gazebosimsystem chay dong co ao thay vi dung dong co that-->
   </hardware>
 
     <joint name="right_wheel_joint">
-      <command_interface name="velocity" />
+      <command_interface name="velocity">
+       <param name="min">-1</param>
+        <param name="max">1</param>
+      </command_interface>
       <state_interface name="position" />
       <state_interface name="velocity" />
     </joint>
     <joint name="left_wheel_joint">
-      <command_interface name="velocity" />
+      <command_interface name="velocity">
+        <param name="min">-1</param>
+        <param name="max">1</param>
+      </command_interface>
       <state_interface name="position" />
       <state_interface name="velocity" />
     </joint>

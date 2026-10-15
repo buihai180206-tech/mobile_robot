@@ -10,34 +10,9 @@
     <set_env name="GIO_MODULE_DIR" value=""/>
     <set_env name="LOCPATH" value=""/>
 
-    <let name="urdf_path" value="$(find-pkg-share my_mobilerobot)/urdf/my_robot.urdf.xacro"/>
-    <let name="rviz_config_path" value="$(find-pkg-share my_mobilerobot)/rviz/config.rviz"/>
-
-    <node pkg="robot_state_publisher" exec="robot_state_publisher">
-        <param name="robot_description"
-               value="$(command 'xacro $(var urdf_path) use_gazebo:=$(var use_gazebo) ')"/>
-        <param name="use_sim_time" value="$(var use_sim_time)"/>
-    </node>
-
-    <!-- [SỬA] KHÔNG chạy ros2_control_node khi dùng Gazebo:
-         plugin gz_ros2_control-system nạp trong Gazebo đã TỰ tạo controller_manager
-         (/controller_manager). Chạy thêm node này sẽ sinh 2 /controller_manager
-         tranh chấp nhau -> controller không lên -> robot không chạy trong Gazebo.
-         Chỉ bật lại node này cho ROBOT THẬT (không có Gazebo). -->
-    <!--
-    <node pkg="controller_manager" exec="ros2_control_node">
-        <param name="robot_description"
-               value="$(command 'xacro $(var urdf_path) use_gazebo:=$(var use_gazebo) ')"/>
-        <param name="use_sim_time" value="$(var use_sim_time)"/>
-        <param from="$(find-pkg-share mobile_controller)/config/controller.yaml"/>
-    </node>
-    -->
-
     <node pkg="controller_manager" exec="spawner" args="joint_state_broadcaster"/>
 
-    <node pkg="controller_manager" exec="spawner" args="diff_drive_controller"/>
+    <!-- <node pkg="controller_manager" exec="spawner" args="diff_drive_controller"/> -->
+    <node pkg="controller_manager" exec="spawner" args="simple_velocity_controller"/>
 
-    <node pkg="rviz2" exec="rviz2" output="screen" args="-d $(var rviz_config_path)" if="$(var launch_rviz)">
-        <param name="use_sim_time" value="$(var use_sim_time)"/>
-    </node>
 </launch>

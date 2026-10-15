@@ -1,19 +1,6 @@
 <?xml version="1.0"?>
 <robot xmlns:xacro="http://www.ros.org/wiki/xacro">
 
-  <!-- =====================================================================
-       ROS2_CONTROL + CẢM BIẾN cho mô phỏng Gazebo (chỉ dùng khi use_gazebo true).
-       [MỚI 2026-10-13] File này được TÁCH RA TỪ gazebo_ros2_control.xacro để giữ
-       nguyên phần dành cho Gazebo (các thẻ <gazebo reference=...> đặt ma sát bánh,
-       plugin gz_ros2_control-system và hardware gz_ros2_control/GazeboSimSystem).
-       Nội dung KHÔNG bị mất, chỉ dời sang file này cho gọn và để file
-       gazebo_ros2_control.xacro lo phần robot thật.
-       Plugin phần cứng gz_ros2_control/GazeboSimSystem (bánh quay trong vật lý Gazebo).
-       Plugin gz_ros2_control-system nạp ros2_control vào Gazebo và trỏ tới
-       mobile_controller/config/controller.yaml.
-       Thẻ gazebo reference dùng để cài ma sát bánh xe giúp robot bám đường.
-       ===================================================================== -->
-
   <gazebo reference="left_wheel">
     <mu1>1.0</mu1>
     <mu2>1.0</mu2>
@@ -45,30 +32,11 @@
 
   <gazebo>
     <plugin filename="gz_ros2_control-system" name="gz_ros2_control::GazeboSimROS2ControlPlugin">
-      <parameters>$(find mobile_controller)/config/controller.yaml</parameters>
+<!--plugin cap he thong cua gazebo, cho biet tich hop ros2_control vao moi truong.
+Khi gazebo nap plugin nay se tu dong tao /controller_manager va doc file yaml de bt can quan ly nhung gi-->
+    <parameters>$(find mobile_controller)/config/controller.yaml</parameters>
     </plugin>
   </gazebo>
 
-  <ros2_control name="RobotSystem" type="system">
-    <hardware>
-      <plugin>gz_ros2_control/GazeboSimSystem</plugin>
-  </hardware>
-    <joint name="right_wheel_joint">
-      <command_interface name="velocity">
-        <param name="min">-1</param>
-        <param name="max">1</param>
-      </command_interface>
-      <state_interface name="position" />
-      <state_interface name="velocity" />
-    </joint>
-    <joint name="left_wheel_joint">
-      <command_interface name="velocity">
-        <param name="min">-1</param>
-        <param name="max">1</param>
-      </command_interface>
-      <state_interface name="position" />
-      <state_interface name="velocity" />
-    </joint>
-  </ros2_control>
 
 </robot>
